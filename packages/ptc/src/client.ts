@@ -15,7 +15,7 @@ export class PTCClient {
     this.tools = options.tools.map(extractToolInfo);
     this.toolMap = new Map();
     this.maxRecursionLimit = options.maxRecursionLimit ?? 100;
-    this.timeoutMs = options.timeoutMs ?? 30000;
+    this.timeoutMs = options.timeoutMs ?? 60000; // Default 60 seconds for E2B operations
     
     // Build tool map for quick lookup
     options.tools.forEach((ptcTool, index) => {
@@ -487,7 +487,9 @@ main().then((result) => {
         } else {
           errorMessage = `Invalid arguments for tool "${request.tool}": ${validationError.message}`;
         }
-        await this.writeErrorResponse(sandbox, requestId, errorMessage);
+        // Format error message to be more test-friendly
+        const formattedError = `Tool call error: ${errorMessage}`;
+        await this.writeErrorResponse(sandbox, requestId, formattedError);
         return;
       }
 
@@ -625,7 +627,7 @@ main().then((result) => {
               }
               resolveCompletion({
                 success: false,
-                error: `Execution exceeded maximum tool call limit (${this.maxRecursionLimit}). This may indicate an infinite loop or excessive tool calls.`,
+                error: `Execution exceeded maximum iteration limit (${this.maxRecursionLimit}). This may indicate an infinite loop or excessive tool calls.`,
               });
               return;
             }
