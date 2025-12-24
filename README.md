@@ -1,15 +1,17 @@
 # @gdrl/ptc
 
-**Programmatic Tool Calling** - Execute AI-written TypeScript safely in an E2B sandbox, while real tool execution happens on your trusted LangGraph server.
+**Programmatic tool calling** library for LangGraph using E2B sandboxes to execute untrusted arbitrary AI-written TypeScript, intergrating with existing LangGraph tools and createAgent() paradigm.
+
+Resources
 
 [![npm version](https://img.shields.io/npm/v/@gdrl/ptc)](https://www.npmjs.com/package/@gdrl/ptc)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> ⚠️ **Compatibility Notice**: PTC middleware is currently **not compatible** with LangGraph deep agents (`deepagents` package). This is due to state channel conflicts when deep agents create subagents. Use PTC with standard `createAgent` from `langchain` instead. Deep agents compatibility is planned for a future release.
+> ⚠️ **Compatibility Notice**: PTC middleware is currently **not compatible** with LangGraph deep agents (`deepagents` package). Use PTC with standard `createAgent` from `langchain` instead.
 
 ## About
 
-PTC (Programmatic Tool Calling) executes AI-written TypeScript code in an E2B sandbox, allowing your agents to programmatically call your LangGraph tools and have access to a filesystem via an E2B sandbox. All while keeping your actual tool execution secure on your trusted server.
+PTC (Programmatic Tool Calling) executes AI-written TypeScript code in an E2B sandbox, allowing your agents to programmatically call your LangGraph tools and have access to a filesystem via an E2B sandbox. All while keeping your actual tool execution on the langgraph server.
 
 This project was inspired by [Anthropic's blog post on Advanced Tool Use](https://www.anthropic.com/engineering/advanced-tool-use). It provides a LangGraph-ready implementation using LangGraph middleware and E2B sandboxes for untrusted arbitrary code execution.
 
@@ -34,7 +36,7 @@ PTC enables agents to orchestrate tools through code execution rather than indiv
 3. **Handles complex control flow explicitly** - Loops, conditionals, error handling, and data transformations are explicit in code rather than implicit in natural language reasoning
 4. **Reduces inference overhead** - Multiple tool calls happen in a single execution pass, with results processed programmatically
 
-**Security & Control**: The code runs in an isolated E2B sandbox, while real tool execution happens on your trusted server. **You maintain full control over tool implementations and data access while executing untrusted AI-written code in a sandbox**.
+**Security & Control**: The code runs in an isolated E2B sandbox, while real tool execution happens on the langgraph server. **You maintain full control over tool implementations and data access while executing untrusted AI-written code in a sandbox**. This prevents AI-code from touching the LangGraph server.
 
 **Context Efficiency**: By processing tool results in code, agents can extract only the insights they need—summaries, aggregations, filtered subsets—rather than dumping entire datasets into context. This dramatically reduces token consumption and keeps important information accessible.
 
@@ -327,7 +329,7 @@ sequenceDiagram
    - Sandbox reads response, updates cache, and continues execution
 5. **Checkpoints**: The E2B sandbox persists throughout execution, allowing stateful operations
 6. **Final result**: Code streams `__PTC_FINAL__{result}` marker, which client parses and returns
-7. **Tool execution**: Only tool execution happens on your trusted LangGraph server; code runs in isolation
+7. **Tool execution**: Only tool execution happens on the LangGraph server; code runs in isolation
 
 The sandbox persists for the entire execution, avoiding recompilation overhead and enabling stateful operations like file I/O.
 
