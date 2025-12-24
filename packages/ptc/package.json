@@ -1,0 +1,67 @@
+{
+  "name": "@gdrl/ptc",
+  "version": "0.1.0",
+  "description": "Programmatic Tool Calling - Execute AI-written TypeScript safely in E2B sandbox",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "langchain",
+    "langgraph",
+    "e2b",
+    "sandbox",
+    "typescript",
+    "tool-calling",
+    "agent",
+    "llm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gabrieldrl/ptc.git",
+    "directory": "packages/ptc"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && pnpm copy:instructions",
+    "copy:instructions": "copyfiles -u 1 src/instructions/template.yaml dist/instructions",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@e2b/sdk": "^1.0.0",
+    "yaml": "^2.8.2",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "@langchain/core": "^1.1.7",
+    "@langchain/langgraph": "^1.0.0",
+    "langchain": "^1.2.0"
+  },
+  "devDependencies": {
+    "@langchain/core": "^1.1.7",
+    "@langchain/langgraph": "^1.0.7",
+    "@types/node": "^20.14.0",
+    "@vitest/ui": "^4.0.16",
+    "copyfiles": "^2.4.1",
+    "langchain": "^1.2.2",
+    "typescript": "^5.6.0",
+    "vitest": "^4.0.16"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,33 @@
+# Source files (only dist should be published)
+src/
+tests/
+*.test.ts
+*.test.js
+tsconfig.json
+tsconfig.test.json
+vitest.config.ts
+
+# Development files
+node_modules/
+.pnpm-store/
+*.log
+.DS_Store
+
+# Build artifacts (keep dist/)
+*.tsbuildinfo
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Environment files
+.env
+.env.local
+.env.*.local
+

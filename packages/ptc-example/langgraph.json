@@ -1,0 +1,9 @@
+{
+    "dependencies": [
+        "."
+    ],
+    "graphs": {
+        "ptc_agent": "./src/agent.ts:agent"
+    },
+    "env": ".env.dev"
+}

@@ -1,0 +1,69 @@
+title: "Programmatic Tool Calling (PTC)"
+description: "You can write TypeScript code that uses tools by importing them from \"/ptc/index\"."
+
+toolCatalogPlaceholder: "{{toolCatalog}}"
+
+examples:
+  basic:
+    description: "Example usage:"
+    code: |
+      // DO NOT include import statements - tools are already available
+      const weather = await get_weather({ city: "london" });
+      const sports = await get_sports_for_weather({ weather: weather });
+      return { summary: `Weather: ${weather}, Sports: ${sports}` };
+
+  loops:
+    description: "Example with loops (properly formatted with all braces closed):"
+    code: |
+      const cities = ["london", "paris"];
+      const results = [];
+
+      for (const city of cities) {
+        const weather = await get_weather({ city });
+        const sports = await get_sports_for_weather({ weather: weather.weather });
+        results.push({ city: weather.city, weather: weather.weather, sports: sports.sports });
+      }
+
+      return { results };
+
+  multiple:
+    description: "Example with multiple tool calls and proper structure:"
+    code: |
+      const city1 = "london";
+      const city2 = "paris";
+
+      const weather1 = await get_weather({ city: city1 });
+      const weather2 = await get_weather({ city: city2 });
+
+      const sports1 = await get_sports_for_weather({ weather: weather1.weather });
+      const sports2 = await get_sports_for_weather({ weather: weather2.weather });
+
+      return {
+        city1: { weather: weather1.weather, sports: sports1.sports },
+        city2: { weather: weather2.weather, sports: sports2.sports }
+      };
+
+criticalRules:
+  title: "CRITICAL CODE STRUCTURE RULES"
+  items:
+    - "**ALWAYS close all opening braces** - Every opening brace { must have a matching closing brace }"
+    - "**Check your code structure** - Count opening and closing braces before submitting"
+    - "**Proper indentation** - Use 2 spaces for each level of nesting"
+    - "**One statement per line** - Don't put multiple statements on one line"
+    - "**Return statement** - Always include a return statement at the end"
+
+importantNotes:
+  title: "IMPORTANT"
+  items:
+    - "DO NOT include import statements in your code - the tools are already imported"
+    - "DO NOT wrap your code in functions - just write the code directly"
+    - "Your code should return a value (use 'return' statement)"
+    - "Use await for async tool calls"
+    - "FORMAT YOUR CODE WITH PROPER LINE BREAKS AND INDENTATION"
+    - "DO NOT write everything on a single line - use multiple lines for readability"
+    - "Each statement should be on its own line"
+    - "Use proper indentation for blocks (functions, loops, conditionals)"
+    - "**VERIFY ALL BRACES ARE CLOSED** - Missing braces will cause compilation errors"
+
+footer: "When you need to use tools, write TypeScript code with proper formatting (multiple lines, proper indentation) and use the ptc_executor tool to execute it."
+
