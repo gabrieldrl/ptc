@@ -29,7 +29,11 @@ export const mockWeatherTool = tool(
       paris: 'rainy',
       'san francisco': 'foggy',
     };
-    return `The weather in ${args.city} is ${weatherMap[args.city.toLowerCase()] || 'unknown'}.`;
+    // Return object to match test expectations
+    return { 
+      weather: weatherMap[args.city.toLowerCase()] || 'unknown',
+      city: args.city 
+    };
   },
   {
     name: 'get_weather',
